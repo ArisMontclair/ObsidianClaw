@@ -2,52 +2,51 @@
 
 ## System Overview
 
-```
-┌─────────────────────────────────────────────────────────────┐
-│  OBSIDIAN VAULT (Source of Truth)                             │
-│  John writes/edits notes with [[wiki links]]                   │
-│  Interface: Obsidian (unchanged)                              │
-└────────────┬──────────────────────────────┬─────────────────┘
-             │                              │
-             ▼                              ▼
-┌────────────────────────┐    ┌─────────────────────────────────┐
-│  OpenClaw memory-core  │    │  Backlinks Generator             │
-│  (extraPaths config)   │    │  (parse wiki links → edges)      │
-│                        │    │                                   │
-│  - Vector embeddings   │    │  - Extract [[wiki links]]        │
-│  - sqlite-vec storage  │    │  - Generate backlinks sections   │
-│  - HNSW index          │    │  - Insert into notes (folded)    │
-│  - Hybrid search       │    │  - Or: generate graph JSON       │
-│  - Temporal decay      │    │                                   │
-│  - MMR diversity       │    └───────────────┬─────────────────┘
-│                        │                     │
-└────────────┬───────────┘                     │
-             │                                 │
-             ▼                                 ▼
-┌─────────────────────────────────────────────────────────────┐
-│  GATEWAY (OpenClaw)                                          │
-│                                                               │
-│  ┌─────────────────┐    ┌──────────────────────────────┐     │
-│  │ Message Handler  │    │ Auto-Retrieve (PROPOSED)      │     │
-│  │                  │───→│                               │     │
-│  │ 1. Receive msg   │    │ 1. Embed user message         │     │
-│  │ 2. Auto-retrieve │    │ 2. Vector search              │     │
-│  │ 3. Inject results│    │ 3. (Optional) Graph traverse  │     │
-│  │ 4. Send to model │    │ 4. Score + rank               │     │
-│  └─────────────────┘    │ 5. Format as system message   │     │
-│                          │ 6. Inject into context        │     │
-│                          └──────────────────────────────┘     │
-│                                                               │
-└────────────┬────────────────────────────────────────────────┘
-             │
-             ▼
-┌─────────────────────────────────────────────────────────────┐
-│  MODEL (LLM)                                                │
-│                                                               │
-│  Receives: [user message] + [injected memories]               │
-│  Responds: with full context, no tool call needed             │
-│                                                               │
-└─────────────────────────────────────────────────────────────┘
+```mermaid
+graph TB
+    subgraph OBSIDIAN["Obsidian Vault (Source of Truth)"]
+        V1["Notes with [[wiki links]]"]
+        V2["Graph View"]
+    end
+
+    subgraph MEMORY_CORE["OpenClaw memory-core"]
+        MC1["Vector Embeddings"]
+        MC2["sqlite-vec Storage"]
+        MC3["HNSW Index"]
+        MC4["Hybrid Search<br/>(Vector + BM25)"]
+        MC5["Temporal Decay"]
+        MC6["MMR Diversity"]
+    end
+
+    subgraph BACKLINKS["Backlinks Generator"]
+        BL1["Extract [[wiki links]]"]
+        BL2["Generate backlinks sections"]
+        BL3["Insert into notes (folded)"]
+        BL4["Or: generate graph JSON"]
+    end
+
+    subgraph GATEWAY["Gateway (OpenClaw)"]
+        MH["Message Handler"]
+        AR["Auto-Retrieve (PROPOSED)"]
+        
+        MH -->|"1. Receive msg"| AR
+        AR -->|"2. Embed query"| AR
+        AR -->|"3. Vector search"| AR
+        AR -->|"4. (Optional) Graph traverse"| AR
+        AR -->|"5. Score + rank"| AR
+        AR -->|"6. Inject results"| MH
+    end
+
+    subgraph MODEL["Model (LLM)"]
+        M1["Receives: [user message] + [injected memories]"]
+        M2["Responds with full context"]
+    end
+
+    OBSIDIAN -->|"extraPaths config"| MEMORY_CORE
+    OBSIDIAN -->|"wiki links"| BACKLINKS
+    MEMORY_CORE -->|"indexed content"| GATEWAY
+    BACKLINKS -->|"graph structure"| GATEWAY
+    MH -->|"context + memories"| MODEL
 ```
 
 ## Components
