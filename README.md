@@ -324,6 +324,12 @@ Model responds with full knowledge, no tool call needed
 | [HippoRAG](https://github.com/OSU-NLP-Group/HippoRAG) | Neurobiologically inspired RAG |
 | [MemGPT/Letta](https://github.com/cpacker/MemGPT) | OS-inspired virtual memory |
 
+## Examples
+
+See the [examples/](examples/) directory for:
+- [Before/after conversations](examples/before-after.md) — what consciousness-like memory sounds like
+- [Example knowledge notes](examples/knowledge-notes/) — sample Obsidian notes with wiki links showing how the graph structure works
+
 ## Repository Structure
 
 ```
@@ -349,7 +355,21 @@ ObsidianClaw/
 │   └── graph-traversal.md       # PR proposal for graph traversal
 └── examples/
     ├── before-after.md          # Example conversations
-    └── association-demo.md      # Association strength demonstration
+    ├── association-demo.md      # Association strength demonstration
+    └── knowledge-notes/         # Sample Obsidian notes with wiki links
+        ├── README.md            # How to read the examples
+        ├── Database Design.md
+        ├── PostgreSQL.md
+        ├── Schema Design.md
+        ├── Migrations.md
+        ├── pgvector.md
+        ├── Vector Search.md
+        ├── API Architecture.md
+        ├── Auth Design.md
+        ├── JWT.md
+        ├── Deployment Strategy.md
+        ├── Connection Pooling.md
+        └── Performance Tuning.md
 ```
 
 ## Contributing
