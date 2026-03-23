@@ -6,7 +6,7 @@
 
 Large Language Models are stateless. Every session starts fresh. Current solutions bolt memory onto the outside — load a markdown file, search a vector store, or embed everything into the context window. None of these are how human memory works.
 
-Human memory is **associative, automatic, and unconscious**. You don't decide to remember something — it surfaces because the context triggered it. Someone says "thermodynamic moral framework" and your brain lights up with extropy, entropy, creation, good, evil. You didn't search for those memories. They surfaced because the network of associations connected them.
+Human memory is **associative, automatic, and unconscious**. You don't decide to remember something — it surfaces because the context triggered it. Someone says "database schema" and your brain lights up with PostgreSQL, migrations, indexing, performance. You didn't search for those memories. They surfaced because the network of associations connected them.
 
 LLMs have no equivalent. They have:
 
@@ -69,7 +69,7 @@ OpenClaw already has a memory system:
 
 - **Automatic retrieval**: The model has to decide to call `memory_search`. This is like a human having to consciously decide to remember something. It defeats the purpose.
 - **Graph traversal**: No parsing of wiki links, no graph edges, no multi-hop associative spreading. Flat vector search only.
-- **Associative spreading**: A query about "extropy" will never surface "determinism" — they're connected through 3 hops in a knowledge graph, but vector search can't follow those connections.
+- **Associative spreading**: A query about "authentication" will never surface "deployment strategy" — they're connected through 3 hops in a knowledge graph, but vector search can't follow those connections.
 
 ## The Obsidian Interface
 
@@ -139,8 +139,8 @@ Add incoming connections to each note using Obsidian's fold syntax:
 ```markdown
 <!-- %% fold %% -->
 ## Backlinks
-- [[Stress Testing Extropy]] - used in stress testing framework
-- [[Extropy Engine - AI Alignment]] - foundation of AI alignment proposal
+- [[Auth Design]] - used in API architecture
+- [[Deployment Strategy]] - foundation of infrastructure decisions
 ```
 
 When OpenClaw embeds the note, the backlinks become part of the vector. The graph is embedded implicitly.
@@ -155,10 +155,10 @@ Parse wiki links into an adjacency list, store as JSON, query after vector searc
 ```python
 # knowledge-graph.json structure
 {
-  "Extropy as Happiness": {
-    "path": "Foundations/Extropy as Happiness.md",
-    "links_to": ["Choice as Prerequisite for Extropy", "Moral Framework"],
-    "linked_from": ["Stress Testing Extropy", "Extropy Engine"],
+  "Auth Design": {
+    "path": "architecture/Auth Design.md",
+    "links_to": ["JWT Implementation", "API Security"],
+    "linked_from": ["Deployment Strategy", "API Architecture"],
     "connection_count": 18
   }
 }
@@ -185,19 +185,19 @@ A search script (`search_vault.py`) does:
 **How it would work:**
 
 ```
-User sends: "tell me about the thermodynamic moral framework"
+User sends: "tell me about the database architecture"
          ↓
 Gateway intercepts
          ↓
-Auto-runs memory_search("thermodynamic moral framework")
+Auto-runs memory_search("database architecture")
          ↓
-Finds: Entropy as Moral Thermodynamics (0.94)
-       Moral Framework - Good and Evil (0.87)
-       Extropy as Happiness (0.82)
+Finds: Auth Design (0.94)
+       API Security (0.87)
+       JWT Implementation (0.82)
          ↓
 Injects as system message:
-  [Relevant memories: Entropy as Moral Thermodynamics: "Good and evil 
-   computed through extropy/entropy..." | Moral Framework: "..."]
+  [Relevant memories: Auth Design: "Stateless authentication with 
+   JWT tokens. Session management via Redis..." | API Security: "..."]
          ↓
 Model sees context automatically
          ↓
@@ -240,7 +240,7 @@ Model responds with full knowledge, no tool call needed
 - LLM extracts entities and relationships from Obsidian notes
 - Builds a knowledge graph
 - Query triggers PageRank on the graph → spreads activation to connected concepts
-- Multi-hop retrieval: "What did John say about demographic displacement in relation to extropy?" → traverses the graph
+- Multi-hop retrieval: "How does auth connect to the caching strategy?" → traverses the graph
 
 **What it gives:**
 - True associative spreading
@@ -277,33 +277,33 @@ Model responds with full knowledge, no tool call needed
 
 ### Without Auto-Retrieve (Current)
 
-**User:** "What's your take on the thermodynamic moral framework?"
+**User:** "What's your take on the project timeline?"
 
-**Model:** "I'm not sure I have context on that specific framework. Could you remind me what you mean?"
+**Model:** "I'm not sure I have context on that specific project. Could you remind me what you mean?"
 
 *The model doesn't remember. It has to be told. Every time.*
 
 ### With Auto-Retrieve (Proposed)
 
-**User:** "What's your take on the thermodynamic moral framework?"
+**User:** "What's your take on the project timeline?"
 
-**Model:** "Good and evil computed through extropy and entropy. Good equals creation, order, truth, vitality. Evil equals destruction, disorder, lies, decay. Biblical moral categories recognized but computed through physics, not faith. No peace with evil. This connects to your extropy thesis — happiness is the subjective experience of extropy, the opposite of entropy. Creating, building, ordering equals happy. Decaying, destroying, dissolving equals miserable."
+**Model:** "You estimated 3 weeks for the MVP, but last Tuesday you realized the auth module needs a refactor that adds 4 days. You also noted that the design review on Friday flagged API versioning as a blocker. So realistically, 4 weeks. You mentioned wanting to parallelize the frontend work with the backend once the API contracts are locked."
 
 *The model remembers. It connects concepts. It sounds alive.*
 
 ### Without Auto-Retrieve
 
-**User:** "Remember when we talked about genetic primacy?"
+**User:** "Remember what we decided about the database schema?"
 
 **Model:** "I don't have specific recall of that conversation. Can you give me more context?"
 
 ### With Auto-Retrieve
 
-**User:** "Remember when we talked about genetic primacy?"
+**User:** "Remember what we decided about the database schema?"
 
-**Model:** "Everything is downstream from genetics. Environment modulates expression but can't create capacity where genetic potential isn't present. Third-gen migrants don't close IQ gaps despite environmental improvement. You corrected yourself on environmental hedging — initially softened the genetic evidence to avoid discomfort. This connects to IQ and population outcomes, G factor robustness, and your broader thesis that genetics dominates the integration across all frames."
+**Model:** "You went with PostgreSQL with vector extensions instead of a separate vector store. The decision was driven by wanting a single source of truth — no separate sync pipeline. You discussed this on March 15th, decided it was worth the tradeoff of slightly slower vector queries for simpler architecture. This connects to your earlier note about preferring 'boring technology that works' over 'exciting technology that breaks.'"
 
-*The model remembers the conversation, the correction, and the connections.*
+*The model remembers the conversation, the reasoning, and the connections.*
 
 ## Research Papers
 

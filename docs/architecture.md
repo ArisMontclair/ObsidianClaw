@@ -168,10 +168,10 @@ CREATE TABLE notes (
 
 ```json
 {
-  "Extropy as Happiness": {
-    "path": "Foundations/Extropy as Happiness.md",
-    "links_to": ["Choice as Prerequisite for Extropy", "Moral Framework"],
-    "linked_from": ["Stress Testing Extropy", "Extropy Engine"],
+  "Auth Design": {
+    "path": "architecture/Auth Design.md",
+    "links_to": ["JWT Implementation", "API Security"],
+    "linked_from": ["Deployment Strategy", "API Architecture"],
     "connection_count": 18
   }
 }

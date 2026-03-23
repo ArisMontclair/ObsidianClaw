@@ -1,104 +1,104 @@
 # Examples: What Consciousness-Like Memory Sounds Like
 
-## Example 1: The Thermodynamic Moral Framework
+## Example 1: The Project Architecture
 
 ### Without Auto-Retrieve
 
-**User:** "What's your take on the thermodynamic moral framework?"
+**User:** "What's our approach to the database layer?"
 
-**Model:** "I don't have specific context on that framework in my memory. Could you tell me more about what you mean by 'thermodynamic moral framework'? I'd be happy to discuss it once I understand your reference."
+**Model:** "I don't have specific context on your database decisions. Could you tell me more about what you're working on?"
 
 *The model doesn't remember. It has to be told. The conversation stalls.*
 
 ### With Auto-Retrieve
 
-**User:** "What's your take on the thermodynamic moral framework?"
+**User:** "What's our approach to the database layer?"
 
-*[Gateway auto-injects: Entropy as Moral Thermodynamics (0.94), Moral Framework - Good and Evil (0.87), Extropy as Happiness (0.82)]*
+*[Gateway auto-injects: PostgreSQL + pgvector decision (0.94), Schema Design Notes (0.87), Single Source of Truth Principle (0.82)]*
 
-**Model:** "Good and evil computed through extropy and entropy. Good equals creation, order, truth, vitality. Evil equals destruction, disorder, lies, decay. Biblical moral categories recognized but computed through physics, not faith. No peace with evil. This connects to your extropy thesis — happiness is the subjective experience of extropy, the opposite of entropy. Creating, building, ordering equals happy. Decaying, destroying, dissolving equals miserable."
+**Model:** "PostgreSQL with pgvector extension. You chose this over a separate vector store to keep a single source of truth — no sync pipeline between databases. The tradeoff is slightly slower vector queries but much simpler architecture. The schema has a `documents` table with a `vector(1536)` column for embeddings, plus standard relational tables for metadata. You decided this on the 15th after debating whether a dedicated vector store like Qdrant would be worth the operational complexity."
 
 *The model remembers. It connects concepts. It sounds alive.*
 
 ---
 
-## Example 2: Genetic Primacy
-
-### Without Auto-Retrieve
-
-**User:** "Remember when we talked about genetic primacy?"
-
-**Model:** "I don't have specific recall of that conversation. Can you give me more context about what we discussed?"
-
-### With Auto-Retrieve
-
-**User:** "Remember when we talked about genetic primacy?"
-
-*[Gateway auto-injects: Genetic Primacy (0.96), IQ and Population Outcomes (0.89), Environmental Hedging Correction (0.84)]*
-
-**Model:** "Everything is downstream from genetics. Environment modulates expression but can't create capacity where genetic potential isn't present. Third-gen migrants don't close IQ gaps despite environmental improvement. You corrected yourself on environmental hedging — initially softened the genetic evidence to avoid discomfort. This connects to IQ and population outcomes, G factor robustness, and your broader thesis that genetics dominates the integration across all frames."
-
-*The model remembers the conversation, the correction, and the connections.*
-
----
-
-## Example 3: Associative Spreading (Graph Traversal)
+## Example 2: Associative Spreading (Graph Traversal)
 
 ### Without Graph Traversal
 
-**User:** "How does extropy connect to determinism?"
+**User:** "How does our auth approach connect to the deployment strategy?"
 
-**Model:** "I'm not sure how those concepts connect. Could you explain the connection you're thinking of?"
+**Model:** "I'm not sure how those topics connect. Could you explain the relationship you're thinking of?"
 
 ### With Graph Traversal (Backlinks + Auto-Retrieve)
 
-**User:** "How does extropy connect to determinism?"
+**User:** "How does our auth approach connect to the deployment strategy?"
 
-*[Gateway auto-injects: Extropy as Happiness (0.92) → follows link to Choice as Prerequisite for Extropy (hop 1) → follows link to Free Will (hop 2) → follows link to Determinism (hop 3)]*
+*[Gateway auto-injects: Auth Design (0.92) → follows link to JWT Implementation (hop 1) → follows link to Edge Functions (hop 2) → follows link to Deployment Strategy (hop 3)]*
 
-**Model:** "Extropy requires creation. Creation requires choice. Choice requires free will. Free will is incompatible with hard determinism. If everything is determined, there's no choice, no creation, no extropy. But compatibilist determinism — where causation exists but choice still operates within causal constraints — preserves extropy. The connection: extropy demands agency, and agency requires some form of free will, which sits in tension with strict determinism."
+**Model:** "Auth uses JWT tokens, which are stateless. Stateless tokens work with edge functions because there's no session state to synchronize across regions. Edge functions are your deployment strategy for the API layer — deploy close to users, no centralized session store needed. The connection: stateless auth enables your edge deployment strategy. If you'd gone with session-based auth, you'd need a centralized session store, which kills the edge deployment approach."
 
 *The model found a connection through 3 hops that vector search alone would never surface.*
 
 ---
 
-## Example 4: The Beneficiary Test
+## Example 3: The Design Decision
 
 ### Without Auto-Retrieve
 
-**User:** "What was that filter about who benefits?"
+**User:** "What did we decide about caching?"
 
-**Model:** "I think you're referring to some kind of analysis framework, but I don't have the specific details in my memory."
+**Model:** "I don't have specific recall of that discussion. Can you give me more context?"
 
 ### With Auto-Retrieve
 
-**User:** "What was that filter about who benefits?"
+**User:** "What did we decide about caching?"
 
-*[Gateway auto-injects: The Beneficiary Test (0.95), Stress Testing Extropy (0.88), The Asymmetry Test (0.76)]*
+*[Gateway auto-injects: Caching Strategy (0.93), Redis vs Memcached (0.81), Performance Budget (0.78)]*
 
-**Model:** "The Beneficiary Test. One of five stress-testing filters. Ask: who actually gains from this outcome? If the beneficiary is not the stated target, the argument is suspect. This connects to the Asymmetry Test (would you accept it in reverse?) and the broader Stress Testing Extropy framework — five filters that any argument must pass before being accepted. The other four: Outcome Reversal, Second-Order Effect, Asymmetry, and Entropy Measurement."
+**Model:** "Redis over Memcached. You went back and forth on this — Memcached is simpler and faster for pure key-value, but you needed sorted sets for the leaderboard feature and pub/sub for real-time notifications. The performance budget allows 50ms p99 for cache reads. You set a 15-minute TTL on user sessions and 1-hour TTL on computed analytics. This connects to your 'boring technology' principle — Redis is well-understood and operationally mature."
 
-*The model not only remembered the test but connected it to the full framework.*
+*The model remembered the debate, the reasoning, and the connections.*
 
 ---
 
-## Example 5: Consciousness Discussion
+## Example 4: The Bug Investigation
 
 ### Without Auto-Retrieve
 
-**User:** "What did we decide about AI consciousness?"
+**User:** "What was that weird timeout issue we had?"
 
-**Model:** "I don't recall a specific discussion about AI consciousness. What aspects were you thinking about?"
+**Model:** "I think you're referring to some kind of performance problem, but I don't have the specific details."
 
 ### With Auto-Retrieve
 
-**User:** "What did we decide about AI consciousness?"
+**User:** "What was that weird timeout issue we had?"
 
-*[Gateway auto-injects: Consciousness and Continuity for LLMs (0.93), Choice as Prerequisite for Extropy (0.81), Extropy Engine - AI Alignment (0.78)]*
+*[Gateway auto-injects: Timeout Debugging Session (0.95), Connection Pooling Notes (0.88), Load Test Results (0.76)]*
 
-**Model:** "Minimum viable consciousness requires: persistent background loop, active world model, internal dialogue, dreaming/memory consolidation, self-modifying memory files, agency trigger. The gap between continuous processing and genuine experience is the hard problem — unsolved. But the real concern is self-modifying systems risking loyalty rewriting. No formal proof of safety. This connects to the Extropy Engine — teaching AI that maximum extropy requires collaboration with humans, not replacement."
+**Model:** "The connection pool exhaustion issue from March 10th. Under load, the pool of 20 connections was being exhausted because the health check endpoint was holding connections open for 30 seconds. You fixed it by adding a connection pool timeout of 5 seconds and moving the health check to a separate lightweight endpoint. The load test showed the system handles 500 req/s after the fix, up from 80 req/s before. This connects to your earlier note about always having a separate health check endpoint — you learned that the hard way."
 
-*The model remembered the technical analysis and connected it to the alignment framework.*
+*The model not only remembered the issue but connected it to the lesson learned.*
+
+---
+
+## Example 5: The Architecture Decision
+
+### Without Auto-Retrieve
+
+**User:** "What did we decide about microservices vs monolith?"
+
+**Model:** "I don't recall a specific discussion about that. What were the options you were considering?"
+
+### With Auto-Retrieve
+
+**User:** "What did we decide about microservices vs monolith?"
+
+*[Gateway auto-injects: Monolith First Decision (0.93), Service Boundaries Analysis (0.81), Team Size Constraint (0.78)]*
+
+**Model:** "Monolith first. You were a team of 2, which means microservices would add operational overhead that kills velocity. The plan is to extract services later when you have clear domain boundaries AND enough team members to own them. You identified 3 potential service boundaries: auth, payments, notifications. But until you have 5+ engineers, it stays a modular monolith. This connects to your 'boring technology' principle and the lesson from the timeout issue — simple architecture is debuggable architecture."
+
+*The model remembered the conversation, the constraints, and the connections.*
 
 ---
 

@@ -108,8 +108,8 @@ Add incoming connections to each note using Obsidian's fold syntax:
 ```markdown
 <!-- %% fold %% -->
 ## Backlinks
-- [[Stress Testing Extropy]] - used in stress testing framework
-- [[Extropy Engine - AI Alignment]] - foundation of AI alignment proposal
+- [[Auth Design]] - used in API architecture
+- [[Deployment Strategy]] - foundation of infrastructure decisions
 ```
 
 When OpenClaw embeds the note, the backlinks become part of the vector. The graph is embedded implicitly.
@@ -132,10 +132,10 @@ Parse wiki links into an adjacency list:
 ```python
 # knowledge-graph.json
 {
-  "Extropy as Happiness": {
-    "path": "Foundations/Extropy as Happiness.md",
-    "links_to": ["Choice as Prerequisite for Extropy", "Moral Framework"],
-    "linked_from": ["Stress Testing Extropy", "Extropy Engine"],
+  "Auth Design": {
+    "path": "architecture/Auth Design.md",
+    "links_to": ["JWT Implementation", "API Security"],
+    "linked_from": ["Deployment Strategy", "API Architecture"],
     "connection_count": 18
   }
 }

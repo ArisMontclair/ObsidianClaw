@@ -108,7 +108,7 @@ Model responds with full context, no tool call needed
 ### Without Auto-Retrieve
 
 ```
-User: "What's your take on the thermodynamic moral framework?"
+User: "What's your take on the database layer approach?"
 
 Model: "I'm not sure I have context on that specific framework. 
 Could you remind me what you mean?"
@@ -117,22 +117,21 @@ Could you remind me what you mean?"
 ### With Auto-Retrieve
 
 ```
-User: "What's your take on the thermodynamic moral framework?"
+User: "What's our approach to the database layer?"
 
 [Auto-retrieve injected: 
- 1. Entropy as Moral Thermodynamics (0.94): "Good and evil computed 
-    through extropy/entropy. Good = creation, order, truth, vitality..."
- 2. Moral Framework - Good and Evil (0.87): "Biblical moral categories 
-    recognized but computed through physics, not faith..."
- 3. Extropy as Happiness (0.82): "Happiness is the subjective 
-    experience of extropy, the opposite of entropy..."]
+ 1. PostgreSQL + pgvector (0.94): "PostgreSQL with pgvector extension 
+    for vector search. Single source of truth..."
+ 2. Schema Design (0.87): "documents table with vector(1536) column 
+    for embeddings, plus standard relational tables..."
+ 3. Architecture Decision (0.82): "Chosen over separate vector store 
+    to avoid sync pipeline complexity..."]
 
-Model: "Good and evil computed through extropy and entropy. Good equals 
-creation, order, truth, vitality. Evil equals destruction, disorder, 
-lies, decay. Biblical moral categories recognized but computed through 
-physics, not faith. No peace with evil. This connects to your extropy 
-thesis — happiness is the subjective experience of extropy, the 
-opposite of entropy."
+Model: "PostgreSQL with pgvector extension. You chose this over a 
+separate vector store to keep a single source of truth — no sync 
+pipeline between databases. The tradeoff is slightly slower vector 
+queries but much simpler architecture. The schema has a documents 
+table with a vector(1536) column for embeddings."
 ```
 
 ## Backward Compatibility
